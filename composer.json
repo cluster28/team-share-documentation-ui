@@ -1,0 +1,13 @@
+{
+  "name": "cluster28/team-share-documentation-twig",
+  "type": "library",
+  "require": {
+    "twig/twig": "^3.3",
+    "cluster28/team-share-documentation": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cluster28\\TeamShareDocumentationUi\\": "src/"
+    }
+  }
+}
