@@ -3,7 +3,7 @@
   "type": "library",
   "require": {
     "twig/twig": "^3.3",
-    "cluster28/team-share-documentation": "dev-master"
+    "cluster28/team-share-documentation": "v1.0.0-alpha"
   },
   "autoload": {
     "psr-4": {
