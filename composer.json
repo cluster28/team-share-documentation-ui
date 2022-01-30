@@ -1,5 +1,5 @@
 {
-  "name": "cluster28/team-share-documentation-twig",
+  "name": "cluster28/team-share-documentation-ui",
   "type": "library",
   "require": {
     "twig/twig": "^3.3",
