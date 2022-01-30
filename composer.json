@@ -9,5 +9,6 @@
     "psr-4": {
       "Cluster28\\TeamShareDocumentationUi\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
