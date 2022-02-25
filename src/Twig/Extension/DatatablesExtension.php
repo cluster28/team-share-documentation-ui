@@ -2,10 +2,12 @@
 
 namespace Cluster28\TeamShareDocumentationUi\Twig\Extension;
 
-use Cluster28\TeamShareDocumentation\Model\Collection\Annotations;
+use Cluster28\TeamShareDocumentation\Annotation\ShareAnnotation;
+use Cluster28\TeamShareDocumentation\Model\Annotation;
+use Cluster28\TeamShareDocumentation\Model\AnnotationData;
+use Cluster28\TeamShareDocumentation\Model\ExtractionResult;
+use Cluster28\TeamShareDocumentation\Model\ClassInfo;
 use Cluster28\TeamShareDocumentationUi\Configuration\Templates\DatatablejsBs5Configuration;
-use ReflectionClass;
-use ReflectionMethod;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -31,31 +33,29 @@ class DatatablesExtension extends AbstractExtension
         return json_encode($this->datatablejsBs5Configuration->getConfig());
     }
 
-    public function getTableRows(Annotations $annotations): string
+    public function getTableRows(ExtractionResult $extractionResult): string
     {
         $rows = [];
-        foreach ($annotations as $arrayAnnotation) {
-            $rows[] = $this->getTableRow($arrayAnnotation);
+        foreach ($extractionResult->getResults() as $classInfo) {
+            /** @var ClassInfo $classInfo */
+            /** @var ShareAnnotation $annotation */
+            foreach ($classInfo->getAllAnnotations() as $annotation) {
+                $rows[] = $this->getTableRow($annotation);
+            }
         }
         return json_encode($rows);
     }
 
-    private function getTableRow($arrayAnnotation): array
+    private function getTableRow(AnnotationData $annotationData): array
     {
-        $class = $method = '';
-        if ($arrayAnnotation[0] instanceof ReflectionClass) {
-            $class = $arrayAnnotation[0]->getName();
-        } elseif ($arrayAnnotation[0] instanceof ReflectionMethod) {
-            $class = $arrayAnnotation[0]->class;
-            $method = $arrayAnnotation[0]->getName();
-        }
-
+        /** @var ShareAnnotation $annotation */
+        $annotation = $annotationData->getAnnotation();
         return [
-            $arrayAnnotation[1]->date,
-            $class,
-            $method,
-            $arrayAnnotation[1]->description,
-            $arrayAnnotation[1]->tags
+            $annotation->getDate(),
+            $annotationData->getClassName(),
+            $annotationData->isInMethod() ? $annotationData->getMethodName() : "",
+            $annotation->getDescription(),
+            $annotation->getTags()
         ];
     }
 }
