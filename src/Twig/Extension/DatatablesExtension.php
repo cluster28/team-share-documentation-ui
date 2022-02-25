@@ -36,12 +36,8 @@ class DatatablesExtension extends AbstractExtension
     public function getTableRows(ExtractionResult $extractionResult): string
     {
         $rows = [];
-        foreach ($extractionResult->getResults() as $classInfo) {
-            /** @var ClassInfo $classInfo */
-            /** @var ShareAnnotation $annotation */
-            foreach ($classInfo->getAllAnnotations() as $annotation) {
-                $rows[] = $this->getTableRow($annotation);
-            }
+        foreach ($extractionResult->getAllAnnotations() as $annotation) {
+            $rows[] = $this->getTableRow($annotation);
         }
         return json_encode($rows);
     }
