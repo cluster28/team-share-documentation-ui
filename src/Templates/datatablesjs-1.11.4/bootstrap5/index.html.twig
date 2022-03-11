@@ -17,7 +17,9 @@
         </table>
     </div>
     <script>
-        var table = $('#table').DataTable({{ get_table_config() }});
-        table.rows.add({{ get_table_rows(annotations) }}).draw();
+        $(document).ready(function() {
+            var table = $('#table').DataTable({{ get_table_config() }});
+            table.rows.add({{ get_table_rows(annotations) }}).draw();
+        });
     </script>
 {% endblock body %}
